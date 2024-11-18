@@ -1,0 +1,238 @@
+import React, { useState } from 'react';
+import { CheckCircle, XCircle } from 'lucide-react';
+
+export default function Quiz() {
+  const [userAnswers, setUserAnswers] = useState({});
+  
+  const questions = [
+    {
+      id: 1,
+      question: "What is the main purpose of explicitly using software processes according to Curtis et al. (1992)?",
+      options: [
+        "To increase project costs",
+        "To facilitate human understanding and communication",
+        "To complicate project management",
+        "To slow down development processes"
+      ],
+      correct: 1
+    },
+    {
+      id: 2,
+      question: "In the context of software process ecosystem, which is NOT one of its main building blocks?",
+      options: [
+        "Management of software processes",
+        "Tools",
+        "Customer feedback",
+        "Certification infrastructure"
+      ],
+      correct: 2
+    },
+    {
+      id: 3,
+      question: "What is the primary difference between life cycle models and software process models?",
+      options: [
+        "Life cycle models are more detailed than process models",
+        "Process models focus on individual processes while life cycle models define main steps",
+        "Life cycle models are only used in agile development",
+        "Process models are only used in waterfall methodology"
+      ],
+      correct: 1
+    },
+    {
+      id: 4,
+      question: "According to the content, why do software processes require considerable knowledge management?",
+      options: [
+        "To increase project complexity",
+        "To reduce team communication",
+        "To perform tasks effectively",
+        "To slow down development"
+      ],
+      correct: 2
+    },
+    {
+      id: 5,
+      question: "How do agile methodologies generally approach the role of people in software development?",
+      options: [
+        "By restricting developer freedom",
+        "By emphasizing automation over human input",
+        "By allowing more freedom in how work is performed",
+        "By eliminating the need for defined processes"
+      ],
+      correct: 2
+    },
+    {
+      id: 6,
+      question: "What is the \"peopleware\" concept referring to in software development?",
+      options: [
+        "The importance of software tools",
+        "The importance of people in development",
+        "The importance of documentation",
+        "The importance of hardware"
+      ],
+      correct: 1
+    },
+    {
+      id: 7,
+      question: "What is one challenge organizations face when setting process frameworks?",
+      options: [
+        "Making them too simple",
+        "Finding balance between tight limits and project flexibility",
+        "Eliminating all project variation",
+        "Removing all process documentation"
+      ],
+      correct: 1
+    },
+    {
+      id: 8,
+      question: "According to the content, what hypothesis exists about processes and products?",
+      options: [
+        "Bad processes always lead to bad products",
+        "Processes don't affect product quality",
+        "Good processes will lead to good products",
+        "Product quality is random"
+      ],
+      correct: 2
+    },
+    {
+      id: 9,
+      question: "What is described as an important feature for teams to cooperate effectively?",
+      options: [
+        "Having no rules",
+        "Having agreed and defined rules about deliverables and timing",
+        "Working independently",
+        "Avoiding documentation"
+      ],
+      correct: 1
+    },
+    {
+      id: 10,
+      question: "In the case study of CS Insurance InfoSys, what was the main benefit of their \"project-out-of-the-box\"?",
+      options: [
+        "Increased project costs",
+        "Slower project setup",
+        "Immediate project setup and focus on content",
+        "Elimination of all processes"
+      ],
+      correct: 2
+    },
+    {
+      id: 11,
+      question: "What is one characteristic of plan-driven processes?",
+      options: [
+        "Incremental planning",
+        "No planning required",
+        "All activities are planned in advance",
+        "Random activity scheduling"
+      ],
+      correct: 2
+    },
+    {
+      id: 12,
+      question: "What is the relationship between defined processes and performed processes?",
+      options: [
+        "They are always identical",
+        "They have no connection",
+        "There are often differences between them",
+        "They cannot coexist"
+      ],
+      correct: 2
+    },
+    {
+      id: 13,
+      question: "According to the content, how do project managers typically select development approaches?",
+      options: [
+        "Based on organizational mandate only",
+        "Based on personal experience and preferences",
+        "Based on random selection",
+        "Based on competitor analysis"
+      ],
+      correct: 1
+    },
+    {
+      id: 14,
+      question: "What aspect of software processes is emphasized in modern organizations compared to the past?",
+      options: [
+        "More detailed definitions",
+        "Less framework flexibility",
+        "Framework within which projects define their own processes",
+        "Complete elimination of processes"
+      ],
+      correct: 2
+    },
+    {
+      id: 15,
+      question: "How does the content describe the implementation of software processes?",
+      options: [
+        "Fully automated",
+        "Largely performed by people with small automated parts",
+        "Fully manual without any automation",
+        "Equally split between automated and manual tasks"
+      ],
+      correct: 1
+    }
+  ];
+
+  const handleAnswer = (questionId, selectedOption) => {
+    setUserAnswers(prev => ({
+      ...prev,
+      [questionId]: selectedOption
+    }));
+  };
+
+  const isCorrect = (questionId, optionIndex) => {
+    return questions[questionId - 1].correct === optionIndex;
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+          Software Process Quiz
+        </h1>
+        
+        <div className="space-y-8">
+          {questions.map((q) => (
+            <div key={q.id} className="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <h2 className="text-xl font-semibold mb-4">
+                {q.id}. {q.question}
+              </h2>
+              
+              <div className="space-y-3">
+                {q.options.map((option, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleAnswer(q.id, index)}
+                    className={`p-4 rounded-lg cursor-pointer transition-all
+                      ${userAnswers[q.id] === index 
+                        ? isCorrect(q.id, index)
+                          ? 'bg-green-500 text-white'
+                          : 'bg-red-500 text-white'
+                        : 'bg-gray-700 hover:bg-gray-600'
+                      }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span>{option}</span>
+                      {userAnswers[q.id] === index && (
+                        isCorrect(q.id, index) 
+                          ? <CheckCircle className="text-white" />
+                          : <XCircle className="text-white" />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="mt-8 text-center">
+          <p className="text-lg">
+            Correct Answers: {Object.entries(userAnswers).filter(([qId, answer]) => 
+              isCorrect(parseInt(qId), answer)
+            ).length} / {questions.length}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}   
